@@ -7,6 +7,11 @@ import { warn } from '../util/index'
 import type { GlobalAPI } from 'types/global-api'
 
 function Vue(options) {
+  // 开发环境下进行警告
+  // 如果不是通过new关键字调用Vue构造函数，就会警告
+  // instanceof 比较左侧的__proto__是否在右侧的prototype上
+  // 如果不等 则取左侧的__proto__的__proto__再和右侧的prototype比较
+  // 一直到找到null为止
   if (__DEV__ && !(this instanceof Vue)) {
     warn('Vue is a constructor and should be called with the `new` keyword')
   }

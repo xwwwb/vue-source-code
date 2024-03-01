@@ -19,8 +19,12 @@ import type { GlobalAPI } from 'types/global-api'
 
 export function initGlobalAPI(Vue: GlobalAPI) {
   // config
+  // 定义config对象和config对象的get和set方法
   const configDef: Record<string, any> = {}
+  // get方法拿到默认的config对象
   configDef.get = () => config
+  // 开发环境下，set方法会警告不要替换Vue.config对象，而是替换单个字段
+  // 具体请看 属性描述符get是否会监控子属性修改.js
   if (__DEV__) {
     configDef.set = () => {
       warn(
