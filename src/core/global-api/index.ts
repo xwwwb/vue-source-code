@@ -17,6 +17,7 @@ import {
 } from '../util/index'
 import type { GlobalAPI } from 'types/global-api'
 
+// Vue的类型是GlobalAPI 可以看types/global-api.ts 然后打开 查看Vue包含的方法 查看具体方法
 export function initGlobalAPI(Vue: GlobalAPI) {
   // config
   // 定义config对象和config对象的get和set方法
@@ -24,7 +25,7 @@ export function initGlobalAPI(Vue: GlobalAPI) {
   // get方法拿到默认的config对象
   configDef.get = () => config
   // 开发环境下，set方法会警告不要替换Vue.config对象，而是替换单个字段
-  // 具体请看 属性描述符get是否会监控子属性修改.js
+  // 具体请看 属性描述符get是否会监控子属性修改
   if (__DEV__) {
     configDef.set = () => {
       warn(
@@ -37,8 +38,11 @@ export function initGlobalAPI(Vue: GlobalAPI) {
   // exposed util methods.
   // NOTE: these are not considered part of the public API - avoid relying on
   // them unless you are aware of the risk.
+  // 可以在Vue.util中找到Vue的一些工具方法 查看Vue包含的方法
   Vue.util = {
+    // 警告方法
     warn,
+    // 给对象添加属性
     extend,
     mergeOptions,
     defineReactive

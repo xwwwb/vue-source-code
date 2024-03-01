@@ -15,12 +15,16 @@ let uid = 0
 
 export function initMixin(Vue: typeof Component) {
   Vue.prototype._init = function (options?: Record<string, any>) {
+    // vm是Vue实例
     const vm: Component = this
     // a uid
+    // 给实例添加_uid属性，值为uid
     vm._uid = uid++
 
     let startTag, endTag
     /* istanbul ignore if */
+    // 以下代码开发环境下才会执行 暂时不了解
+
     if (__DEV__ && config.performance && mark) {
       startTag = `vue-perf-start:${vm._uid}`
       endTag = `vue-perf-end:${vm._uid}`
@@ -29,6 +33,7 @@ export function initMixin(Vue: typeof Component) {
 
     // a flag to mark this as a Vue instance without having to do instanceof
     // check
+    // 标记当前实例是Vue 不用去查找原型链了
     vm._isVue = true
     // avoid instances from being observed
     vm.__v_skip = true

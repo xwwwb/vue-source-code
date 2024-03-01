@@ -15,6 +15,7 @@ function Vue(options) {
   if (__DEV__ && !(this instanceof Vue)) {
     warn('Vue is a constructor and should be called with the `new` keyword')
   }
+  // 该方法在initMixin()函数中会被挂载到Vue.prototype._init上
   this._init(options)
 }
 
@@ -28,5 +29,7 @@ eventsMixin(Vue)
 lifecycleMixin(Vue)
 //@ts-expect-error Vue has function type
 renderMixin(Vue)
+
+
 
 export default Vue as unknown as GlobalAPI

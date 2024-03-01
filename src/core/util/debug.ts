@@ -4,27 +4,36 @@ import type { Component } from 'types/component'
 import { currentInstance } from 'v3/currentInstance'
 import { getComponentName } from '../vdom/create-component'
 
+// 查看 ESM对象暴漏后再修改是否生效
+// 默认状态下 warn是一个空函数
 export let warn: (msg: string, vm?: Component | null) => void = noop
 export let tip = noop
 export let generateComponentTrace: (vm: Component) => string // work around flow check
 export let formatComponentName: (vm: Component, includeFile?: false) => string
 
+// 如果是开发环境
 if (__DEV__) {
+  // 判断有没有console对象
   const hasConsole = typeof console !== 'undefined'
   const classifyRE = /(?:^|[-_])(\w)/g
   const classify = str =>
     str.replace(classifyRE, c => c.toUpperCase()).replace(/[-_]/g, '')
 
+  // 警告函数
   warn = (msg, vm = currentInstance) => {
+    // 生成调用栈
     const trace = vm ? generateComponentTrace(vm) : ''
 
+    // 如果config里写了warnHandler方法，就调用warnHandler方法
     if (config.warnHandler) {
       config.warnHandler.call(null, msg, vm, trace)
     } else if (hasConsole && !config.silent) {
+      // 如果有console对象且config.silent为false 则以console.error的形式打印出来
       console.error(`[Vue warn]: ${msg}${trace}`)
     }
   }
 
+  // 使用console.warn打印调用栈
   tip = (msg, vm) => {
     if (hasConsole && !config.silent) {
       console.warn(`[Vue tip]: ${msg}` + (vm ? generateComponentTrace(vm) : ''))
