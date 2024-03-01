@@ -1,5 +1,6 @@
 const path = require('path')
 
+// 当前文件夹的上层文件夹 在拼接参数
 const resolve = p => path.resolve(__dirname, '../', p)
 
 module.exports = {

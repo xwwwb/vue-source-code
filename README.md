@@ -1,3 +1,5 @@
+# 基于最后一次提交为 bed04a7 的代码
+
 ## Vue 2 has reached End of Life
 
 **You are looking at the now inactive repository for Vue 2. The actively maintained repository for the latest version of Vue is [vuejs/core](https://github.com/vuejs/core).**
