@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="app">hello</div>
+		<script src="dist/vue.js"></script>
+		<script>
+			let vm = new Vue({
+				el: '#app',
+				data: function () {
+					// console.log(this);
+					return {
+						msg: 'hello',
+						a: {
+							b: 20
+						}
+					};
+				}
+			});
+
+			// 以下代码是正常Vue开发的代码
+			// let temp = { b: 30 };
+			// for (let i in temp) {
+			// 	vm._data.a[i] = temp[i];
+			// }
+			// console.log(vm._data);
+			// 但是本项目采取了一种含有性能问题的方法 在set里重新监控数据
+			vm._data.a = { c: 30 };
+			console.log(vm._data);
+		</script>
+	</body>
+</html>
