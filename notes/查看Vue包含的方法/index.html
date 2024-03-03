@@ -11,7 +11,13 @@
     <script>
       console.dir(Vue)
       console.dir(Vue.util)
-      const vm = new Vue()
+      const vm = new Vue({
+        data: {
+          list: [1, 2, 3],
+          listWithObject: [{ name: 'xwb' }]
+        }
+      })
+      // 这里存在疑问 不是说 vue的数组上没有用到get和set吗 为什么还是可以看到get和set
       console.log(vm)
     </script>
   </body>

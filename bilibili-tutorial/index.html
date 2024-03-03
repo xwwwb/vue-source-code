@@ -17,7 +17,9 @@
 						msg: 'hello',
 						a: {
 							b: 20
-						}
+						},
+						list: [1, 2, 3],
+						listWithObject: [{ name: 'xwb' }]
 					};
 				}
 			});
@@ -31,6 +33,9 @@
 			// 但是本项目采取了一种含有性能问题的方法 在set里重新监控数据
 			vm._data.a = { c: 30 };
 			console.log(vm._data);
+			vm._data.list.push('aa');
+			// 以下方法是否会失去响应式
+			vm._data.list = [...vm._data.list, 'aaa'];
 		</script>
 	</body>
 </html>

@@ -1,3 +1,4 @@
+import { ArrayMethods } from './array';
 export function observer(data) {
 	// 对data对象进行处理
 	// 判断数据是否存在
@@ -10,9 +11,18 @@ export function observer(data) {
 }
 
 // vue2只能对对象中的一个属性进行劫持，所以需要递归处理
+// Observer 是对对象的劫持
 class Observer {
 	constructor(value) {
-		this.walk(value); // 遍历
+		// 判断数据是数组还是对象
+		if (Array.isArray(value)) {
+			// 处理数组
+			value.__proto__ = ArrayMethods;
+			// 处理数组中的对象
+			this.observeArray(value);
+		} else {
+			this.walk(value); // 遍历
+		}
 	}
 	walk(data) {
 		let keys = Object.keys(data);
@@ -23,9 +33,12 @@ class Observer {
 			defineReactive(data, key, value);
 		}
 	}
+	observeArray(value) {}
 }
 
 function defineReactive(data, key, value) {
+	// 如果该属性的值是对象 则深度监控
+	// 如果data下的属性的值不是对象 常规字符串或者数字等 进入observer方法会直接return
 	observer(value);
 	Object.defineProperty(data, key, {
 		get() {
