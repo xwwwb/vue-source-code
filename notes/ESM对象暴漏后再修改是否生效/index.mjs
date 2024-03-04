@@ -1,2 +1,10 @@
-export let a = 1
-a = 2
+export let a = {
+  name: 'xwb'
+}
+a.name = 'xwwwb'
+
+console.log('this is index.mjs')
+
+setTimeout(() => {
+  a = {}
+}, 1000)

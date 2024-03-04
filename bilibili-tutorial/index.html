@@ -6,7 +6,7 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<div id="app">hello</div>
+		<div id="app">hello {{msg}}</div>
 		<script src="dist/vue.js"></script>
 		<script>
 			let vm = new Vue({
@@ -32,10 +32,23 @@
 			// console.log(vm._data);
 			// 但是本项目采取了一种含有性能问题的方法 在set里重新监控数据
 			vm._data.a = { c: 30 };
-			console.log(vm._data);
+			// console.log(vm._data);
+			// 会走数组的函数劫持
 			vm._data.list.push('aa');
-			// 以下方法是否会失去响应式
+			// 以下方法是否会失去响应式 虽然没有走数组方法重写 但是数组本身带get set 应该是可以的
 			vm._data.list = [...vm._data.list, 'aaa'];
+
+			// 数组中的对象数据劫持
+			vm._data.listWithObject[0].name = 'xwwwb';
+			// 数组中新加入的对象 数据劫持
+			vm._data.listWithObject.splice(1, 1, { age: 18 });
+
+			console.log(vm);
+			vm.msg = 100;
+
+			// vue的模板编译 先看有无el 没有el就等待mount函数被调用传入el 拿到el后 查看有没有render函数 如果没有render 就会
+			// 从template中拿结果编译为render 如果没有template 就把outerHTML当模板
+			// render()生成虚拟节点 然后变成真实DOM 放到页面上
 		</script>
 	</body>
 </html>

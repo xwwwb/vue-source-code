@@ -8,8 +8,13 @@
   <body>
     <script type="module">
       import { a } from './index.mjs'
+
       console.log(a)
+
       console.log('导出的a等于2 所以export let a = 1; a = 2 再导入的结果是2')
+      setTimeout(() => {
+        console.log(a)
+      }, 2000)
     </script>
   </body>
 </html>

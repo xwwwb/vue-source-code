@@ -2,6 +2,7 @@ import { ArrayMethods } from './array';
 export function observer(data) {
 	// 对data对象进行处理
 	// 判断数据是否存在
+
 	if (typeof data != 'object' || data == null) {
 		return;
 		// 如果不是对象或者是null直接返回
@@ -14,6 +15,12 @@ export function observer(data) {
 // Observer 是对对象的劫持
 class Observer {
 	constructor(value) {
+		// 给data定义一个属性
+		Object.defineProperty(value, '__ob__', {
+			enumerable: false,
+			value: this // 把observer函数
+		});
+
 		// 判断数据是数组还是对象
 		if (Array.isArray(value)) {
 			// 处理数组
@@ -33,7 +40,11 @@ class Observer {
 			defineReactive(data, key, value);
 		}
 	}
-	observeArray(value) {}
+	observeArray(value) {
+		for (let i = 0; i < value.length; i++) {
+			observer(value[i]);
+		}
+	}
 }
 
 function defineReactive(data, key, value) {
@@ -45,10 +56,13 @@ function defineReactive(data, key, value) {
 			return value;
 		},
 		set(newValue) {
-			if (newValue === value) return value;
+			// if (newValue === value) return value;
+			// eslint说setter不返回
+			if (newValue === value) return;
+
 			// 这里的value就是闭包内的 修改的就是闭包内的
 			// get拿到的也是闭包内的 所以没问题 但是如果访问$options上的data 还是原数据
-
+			// console.log('set', key, newValue);
 			// 当被赋值为新的 也要重新检测 这里有性能问题
 			observer(newValue);
 			value = newValue;
